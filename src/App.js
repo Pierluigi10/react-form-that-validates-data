@@ -4,15 +4,16 @@ import "./App.scss";
 function App() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [pin, setPin] = useState("");
   const [payload, setPayload] = useState({});
 
-  const [phoneIsValid, setPhoneIsValid] = useState(false);
+  const [pinIsValid, setPinIsValid] = useState(false);
   const [nameIsValid, setNameIsValid] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
-    setFormIsValid(nameIsValid && phoneIsValid);
-  }, [nameIsValid, phoneIsValid]);
+    setFormIsValid(nameIsValid && pinIsValid);
+  }, [nameIsValid, pinIsValid]);
 
   const clearPayload = () => {
     setPayload((prev) => ({}));
@@ -20,7 +21,7 @@ function App() {
 
   const handleName = (e) => {
     let _name = e.target.value;
-    if (_name !== "" && _name.length <= 10) {
+    if (_name !== "" && _name.length <= 10 && _name.length >= 5) {
       setNameIsValid(true);
     } else {
       setNameIsValid(false);
@@ -29,23 +30,22 @@ function App() {
     clearPayload();
   };
 
-  const handlePhone = (e) => {
-    let _phone = e.target.value;
-    if (_phone !== "" && /^\d\d\d-\d\d\d-\d\d\d\d$/.test(_phone)) {
-      setPhoneIsValid(true);
+  const handlePin = (e) => {
+    let _pin = e.target.value;
+    if (_pin !== "" && /^\d\d\d\d$/.test(_pin)) {
+      setPinIsValid(true);
     } else {
-      setPhoneIsValid(false);
+      setPinIsValid(false);
     }
-    setPhone(_phone);
+    setPin(_pin);
     clearPayload();
   };
-
   const handleButton = (e) => {
     e.preventDefault();
     setPayload((prev) => ({
       ...prev,
       name,
-      phone,
+      pin,
     }));
   };
   return (
@@ -60,17 +60,13 @@ function App() {
           <div className={"note " + (nameIsValid ? "valid" : "invalid")}>
             required, maximum 10 characters
           </div>
-          <div className={"row " + (phoneIsValid ? "valid" : "invalid")}>
-            <label htmlFor="phone">Phone</label>
-            <input
-              type="text"
-              id="phone"
-              onChange={handlePhone}
-              value={phone}
-            />
+
+          <div className={"row " + (pinIsValid ? "valid" : "invalid")}>
+            <label htmlFor="pin">Pin</label>
+            <input type="text" id="pin" onChange={handlePin} value={pin} />
           </div>
-          <div className={"note " + (phoneIsValid ? "valid" : "invalid")}>
-            e.g. 555-333-2222
+          <div className={"note " + (pinIsValid ? "valid" : "invalid")}>
+            e.g. nnnn
           </div>
 
           <div className="buttonRow">
