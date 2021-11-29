@@ -72,7 +72,7 @@ function App() {
             <input type="text" id="name" value={name} onChange={handleName} />
           </div>
           <div className={"note " + (nameIsValid ? "valid" : "invalid")}>
-            required, maximum 10 characters
+            required, minium 5 characters and maximum 10 characters
           </div>
 
           <div className={"row " + (pinIsValid ? "valid" : "invalid")}>
