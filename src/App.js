@@ -3,12 +3,13 @@ import "./App.scss";
 
 function App() {
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
   const [pin, setPin] = useState("");
+  const [email, setEmail] = useState("");
   const [payload, setPayload] = useState({});
 
   const [pinIsValid, setPinIsValid] = useState(false);
   const [nameIsValid, setNameIsValid] = useState(false);
+  const [emailIsValid, setEmailIsValid] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
@@ -40,6 +41,19 @@ function App() {
     setPin(_pin);
     clearPayload();
   };
+
+  const handleEmail = (e) => {
+    let _email = e.target.value;
+    if (_email !== "" && /(.+)@(.+){2,}\.(.+){2,}/.test(_email)) {
+      setEmailIsValid(true);
+    } else {
+      setEmailIsValid(false);
+    }
+    setEmail(_email);
+    clearPayload();
+  };
+
+
   const handleButton = (e) => {
     e.preventDefault();
     setPayload((prev) => ({
@@ -69,9 +83,17 @@ function App() {
             e.g. nnnn
           </div>
 
+          <div className={"row " + (emailIsValid ? "valid" : "invalid")}>
+            <label htmlFor="email">Email</label>
+            <input type="text" id="email" onChange={handleEmail} value={email} />
+          </div>
+          <div className={"note " + (emailIsValid ? "valid" : "invalid")}>
+            e.g. xxxx@xxxx.xx
+          </div>
+
           <div className="buttonRow">
             <button disabled={!formIsValid} onClick={handleButton}>
-              Register
+              Send
             </button>
           </div>
         </fieldset>
