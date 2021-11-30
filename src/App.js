@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "./App.scss";
 
+// const backendUrl = "http://localhost:3022";
+
 function App() {
   const [name, setName] = useState("");
   const [pin, setPin] = useState("");
@@ -53,6 +55,32 @@ function App() {
     clearPayload();
   };
 
+  // const handleButton = (e) => {
+  //   e.preventDefault();
+  //   setPayload((prev) => ({
+  //     ...prev,
+  //     name,
+  //     pin,
+  //   }));
+  // };
+
+  // const handleButton = (e) => {
+  //   e.preventDefault();
+  //   (async () => {
+  //     await fetch(`http://localhost:3022/save-user-info`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         user: {
+  //           name: name,
+  //           pin: pin,
+  //           email: email,
+  //         },
+  //       }),
+  //     });
+  //     clearPayload();
+  //   })();
+  // };
 
   const handleButton = (e) => {
     e.preventDefault();
@@ -61,6 +89,20 @@ function App() {
       name,
       pin,
     }));
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user: {
+          name,
+          pin,
+          email,
+        },
+      }),
+    };
+    (async () => {
+      await fetch(`http://localhost:3022/save-user-info`, requestOptions);
+    })();
   };
   return (
     <div className="App">
@@ -85,7 +127,12 @@ function App() {
 
           <div className={"row " + (emailIsValid ? "valid" : "invalid")}>
             <label htmlFor="email">Email</label>
-            <input type="text" id="email" onChange={handleEmail} value={email} />
+            <input
+              type="text"
+              id="email"
+              onChange={handleEmail}
+              value={email}
+            />
           </div>
           <div className={"note " + (emailIsValid ? "valid" : "invalid")}>
             e.g. xxxx@xxxx.xx
