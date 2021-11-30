@@ -84,11 +84,11 @@ function App() {
 
   const handleButton = (e) => {
     e.preventDefault();
-    setPayload((prev) => ({
-      ...prev,
-      name,
-      pin,
-    }));
+    // setPayload((prev) => ({
+    //   ...prev,
+    //   name,
+    //   pin,
+    // }));
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -103,6 +103,9 @@ function App() {
     (async () => {
       await fetch(`http://localhost:3022/save-user-info`, requestOptions);
     })();
+    setEmail("");
+    setPin("");
+    setName("");
   };
   return (
     <div className="App">
